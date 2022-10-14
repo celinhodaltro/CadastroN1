@@ -17,9 +17,7 @@ namespace Cadastro.Infrastructure.Data.EntityConfig
             builder.Property(m => m.Value)
                 .IsRequired();
 
-            builder.HasOne(m => m.Category)
-                .WithMany()
-                .HasForeignKey(m => m.IdCategory);
+            builder.HasOne(m => m.Client);
         }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Cadastro.Domain.Interfaces
 {
-    interface IProductRepository
+    public interface IProductRepository
     {
         Product Get(int id);
         IEnumerable<Product> GetAll();
-        void Insert(Product client);
-        void Update(Product client);
+        void Insert(Product Entity);
+        void Update(Product Entity);
         void Delete(int id);
     }
 }

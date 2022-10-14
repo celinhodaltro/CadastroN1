@@ -12,6 +12,7 @@ namespace Cadastro.Infrastructure.ExtensionMethods
         {
 
             services.AddTransient<Interfaces.IClientViewModelService, Services.ClientViewModelService>();
+            services.AddTransient<Interfaces.IProductViewModelService, Services.ProductViewModelService>();
 
 
             return services;
@@ -19,7 +20,6 @@ namespace Cadastro.Infrastructure.ExtensionMethods
 
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<Domain.Interfaces.ICategoryRepository, Data.Repositories.CategoryRepository>();
             services.AddTransient<Domain.Interfaces.IClientRepository, Data.Repositories.ClientRepository>();
             services.AddTransient<Domain.Interfaces.IProductRepository, Data.Repositories.ProductRepository>();
 
