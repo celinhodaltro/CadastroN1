@@ -22,12 +22,11 @@ namespace Cadastro.ViewModels
         [Required(ErrorMessage = "Um valor é necessario.")]
         [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         [RegularExpression(@"^\d*(\.\d{0,2})?$", ErrorMessage = "O {0} está invalido, O campo deve ser inserido no seguinte formato: (0.00)")]
+
         public string InputValue { get; set; }
 
         [Display(Name = "Valor")]
-        [Required(ErrorMessage = "Um valor é necessario.")]
-        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
-
+        [DataType(DataType.Currency)]
         public decimal Value { get; set; }
 
         [Display(Name = "Disponivel")]

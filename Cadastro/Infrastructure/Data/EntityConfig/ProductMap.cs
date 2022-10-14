@@ -17,6 +17,7 @@ namespace Cadastro.Infrastructure.Data.EntityConfig
             builder.Property(m => m.Value)
                 .IsRequired();
 
+
             builder.HasOne(m => m.Client);
         }
     }

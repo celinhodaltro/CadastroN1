@@ -46,8 +46,8 @@ namespace Cadastro.Services
 
         public void Insert(ProductViewModel viewModel)
         {
-            if (viewModel.InputValue != null && String.IsNullOrEmpty(viewModel.InputValue))
-                viewModel.Value = Convert.ToDecimal(viewModel.InputValue);
+            if (viewModel.InputValue != null && !String.IsNullOrEmpty(viewModel.InputValue))
+                viewModel.Value = Convert.ToDecimal(viewModel.InputValue.Replace('.',','));
 
             var entity = _mapper.Map<Product>(viewModel);
 
@@ -57,6 +57,9 @@ namespace Cadastro.Services
 
         public void Update(ProductViewModel viewModel)
         {
+            if (viewModel.InputValue != null && !String.IsNullOrEmpty(viewModel.InputValue))
+                viewModel.Value = Convert.ToDecimal(viewModel.InputValue.Replace('.', ','));
+
             var entity = _mapper.Map<Product>(viewModel);
 
             _productRepository.Update(entity);

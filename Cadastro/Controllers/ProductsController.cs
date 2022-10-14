@@ -30,14 +30,16 @@ namespace Cadastro.Controllers
             return View(list);
         }
 
-        // GET: Clients/Details/5
+        // GET: Products/Details/5
         public ActionResult Details(int id)
         {
             var viewModel = _productViewModelService.Get(id);
+            viewModel.Client = _clientViewModelService.Get(viewModel.ClientId);
+
             return View(viewModel);
         }
 
-        // GET: Clients/Create
+        // GET: Products/Create
         public ActionResult Create()
         {
             var ViewModel = new ProductTransferModel();
@@ -49,7 +51,7 @@ namespace Cadastro.Controllers
             return View(ViewModel);
         }
 
-        // POST: Clients/Create
+        // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductTransferModel viewModel)
@@ -71,23 +73,36 @@ namespace Cadastro.Controllers
             }
         }
 
-        // GET: Clients/Edit/5
+        // GET: Products/Edit/5
         public ActionResult Edit(int id)
         {
-            var viewModel = _productViewModelService.Get(id);
-            return View(viewModel);
+
+            var ViewModel = new ProductTransferModel();
+
+            
+            ViewModel.Product = _productViewModelService.Get(id);
+
+            if(ViewModel.Product.Value != 0)
+                ViewModel.Product.InputValue = Convert.ToString(ViewModel.Product.Value).Replace(',','.');
+
+            ViewModel.Clients = _clientViewModelService.GetAll();
+
+            if (ViewModel.Clients != null && ViewModel.Clients.Count() > 0)
+                ViewModel.Clients = ViewModel.Clients.Where(tb => tb.Ative == true);
+
+            return View(ViewModel);
         }
 
-        // POST: Clients/Edit/5
+        // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ProductViewModel viewModel)
+        public ActionResult Edit(int id, ProductTransferModel viewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _productViewModelService.Update(viewModel);
+                    _productViewModelService.Update(viewModel.Product);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -99,14 +114,15 @@ namespace Cadastro.Controllers
             }
         }
 
-        // GET: Clients/Delete/5
+        // GET: Products/Delete/5
         public ActionResult Delete(int id)
         {
             var viewModel = _productViewModelService.Get(id);
+            viewModel.Client = _clientViewModelService.Get(viewModel.ClientId);
             return View(viewModel);
         }
 
-        // POST: Clients/Delete/5
+        // POST: Products/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
